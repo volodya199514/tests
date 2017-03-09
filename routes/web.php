@@ -13,4 +13,3 @@
 
 Route::get('/',['as'=>'home', 'uses'=>'IndexController@show']);
 Route::get('search',['as'=>'home', 'uses'=>'IndexController@show']);
-Route::post('search',['as'=>'home', 'uses'=>'IndexController@show']);
