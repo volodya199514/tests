@@ -43,9 +43,6 @@ class IndexController extends Controller
                 });
             }
         }
-
-
-
         return view('index', ['users' => $users]);
     }
 }
