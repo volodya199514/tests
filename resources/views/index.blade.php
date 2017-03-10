@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>User list</title>
 
@@ -12,17 +13,10 @@
 
         <!--Css-->
         <link rel="stylesheet" type="text/css" media="all" href="{{ asset('')}}/css/app.css" />
-        <script type="text/javascript" src="{{ asset('')}}js/jquery.js"></script>
 
-        <script type="text/javascript">
-            $(document).ready(function(){
-                $('.footable').footable();
-            });
-        </script>
 
     </head>
     <body>
-    <form action="search" method="get">
 
     @if($users)
         <table class="footable" border="1">
@@ -32,13 +26,13 @@
                 <td>Phone</td>
                 <td>Address</td>
                 <td>Дата створення
-                    <button name="created" class="txt" id="created" value="down">Вниз</button>
-                    <button name="created" class="txt" id="created" value="up">Вгору</button>
+                        <button type="button" name="created" class="getRequest" id="created" value="down">Вниз</button>
+                        <button type="button" name="created" class="getRequest" id="created" value="up">Вгору</button>
                 </td>
                 <td>
                     Count comment
-                    <button name="count" class="txt" id="created" value="down">Вниз</button>
-                    <button name="count" class="txt" id="created" value="up">Вгору</button>
+                        <button name="count" class="getRequest" id="count" value="down">Вниз</button>
+                        <button name="count" class="getRequest" id="count" value="up">Вгору</button>
                 </td>
                 <td>Last comment</td>
             </thead>
@@ -60,17 +54,42 @@
     @endif
     <br>
 
-Search:
-
-
-        <select name="tag">
+    Search:
+        <select id="select" name="tag">
             <option value=name>Name</option>
             <option value=surname>Surname</option>
             <option value=address>Address</option>
             <option value=phone>Phone</option>
         </select>
-        <input name="text">
-        <input type="submit" value="Filter" />
-    </form>
+        <input id="filter_text" name="text">
+        <input id="filter" class="getRequest" type="submit" value="filter" />
+
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript">
+
+        jQuery(document).ready(function($){
+            $('.getRequest').click(function(){
+                var func = this.id;
+                var range = this.value;
+                var select = $('#select').val();
+                var text = $('#filter_text').val();
+
+                $.get(
+                    $( this ).prop( 'action' ),
+                    {
+                        "select": select,
+                        "text": text,
+                        "func": func,
+                        "range": range
+                    },
+                    function( data ) {
+                        $("tbody").html(data['html']);
+                        //do something with data/response returned by server
+                    },
+                    'json'
+                );
+            });
+        });
+    </script>
     </body>
 </html>

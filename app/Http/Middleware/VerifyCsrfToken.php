@@ -12,6 +12,15 @@ class VerifyCsrfToken extends BaseVerifier
      * @var array
      */
     protected $except = [
-        //
     ];
+
+    /**
+     *     * Determine if the session and input CSRF tokens match.
+     *      *
+     *     * @param \Illuminate\Http\Request $request
+     *     * @return bool
+     *     */
+
+
+
 }
