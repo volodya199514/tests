@@ -84,7 +84,6 @@
                     },
                     function( data ) {
                         $("tbody").html(data['html']);
-                        //do something with data/response returned by server
                     },
                     'json'
                 );
